@@ -9,7 +9,7 @@ class ApiClient:
         :param base_url: The base URL for the API.
         """
 
-    def get_players(self, sport, platform, params=None):
+    def get_players(self, platform, sport, params=None):
         """
         Fetch player IDs from the API and return as a DataFrame.
 
@@ -18,7 +18,7 @@ class ApiClient:
         :param params: Additional query parameters for the request.
         :return: A pandas DataFrame containing player IDs.
         """
-        url = f"https://www.fantrax.com/fxea/general/getPlayerIds?sport={sport}"
+        url = f"https://www.fantrax.com/fxea/general/getPlayerIds?sport={str(sport)}"
         try:
             response = requests.get(url, params=params)
             response.raise_for_status()
@@ -26,7 +26,7 @@ class ApiClient:
             return data
         except requests.RequestException as e:
             print(f"An error occurred: {e}")
-            return pd.DataFrame()
+            return None
         
     def fantrax_team_roster(self, league_id):
         """
