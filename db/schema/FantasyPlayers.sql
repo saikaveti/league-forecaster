@@ -1,4 +1,4 @@
-CREATE TABLE fantasy.FantasyPlayers (
+CREATE TABLE main.FantasyPlayers (
     Platform VARCHAR(50) NOT NULL,
     Sport VARCHAR(50) NOT NULL,
     PlayerId VARCHAR(255) NOT NULL,

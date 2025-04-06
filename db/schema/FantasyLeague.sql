@@ -1,4 +1,4 @@
-CREATE TABLE fantasy.FantasyLeague (
+CREATE TABLE main.FantasyLeague (
     AccountId VARCHAR(255) NOT NULL,
     Platform VARCHAR(50) NOT NULL,
     Sport VARCHAR(50) NOT NULL,

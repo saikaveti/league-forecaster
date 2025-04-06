@@ -1,4 +1,4 @@
-CREATE TABLE stats.FangraphsHitterRange (
+CREATE TABLE main.FangraphsHitterRange (
     PlayerId INT NOT NULL,
     PlayerName VARCHAR(255) NOT NULL,
     LastRange INT NOT NULL,

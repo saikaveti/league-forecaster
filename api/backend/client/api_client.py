@@ -28,6 +28,23 @@ class ApiClient:
             print(f"An error occurred: {e}")
             return None
         
+    def fantrax_get_leagues(self, secret_id):
+        """
+        Fetch leagues from the Fantrax API using a secret ID.
+
+        :param secret_id: The secret ID to fetch leagues for.
+        :return: The data returned by the API.
+        """
+        url = f"https://www.fantrax.com/fxea/general/getLeagues?userSecretId={secret_id}"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            data = response.json()
+            return data
+        except requests.RequestException as e:
+            print(f"An error occurred: {e}")
+            return None
+        
     def fantrax_team_roster(self, league_id):
         """
         Fetch team rosters from the Fantrax API for a given league ID.

@@ -1,4 +1,4 @@
-CREATE TABLE game.PitchingProbables (
+CREATE TABLE main.PitchingProbables (
     HomeTeam NVARCHAR(100) NOT NULL,
     AwayTeam NVARCHAR(100) NOT NULL,
     Pitcher NVARCHAR(100) NOT NULL,

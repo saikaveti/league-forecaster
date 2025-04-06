@@ -3,6 +3,4 @@ from backend.model.platform import Platform
 from backend.model.sport import Sport
 
 fantasy_etl = FantasyETL()
-print(str(Sport.MLB))
-results = fantasy_etl.extract_players(Platform.Fantrax, Sport.MLB)
-print(results)
+results = fantasy_etl.run_players_etl(Platform.Fantrax, Sport.MLB, "../../db/sqlite3/LeagueForecasterTest.db", "insert")

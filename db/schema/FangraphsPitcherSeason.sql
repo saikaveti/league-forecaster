@@ -1,4 +1,4 @@
-CREATE TABLE stats.FangraphsPitcherSeason (
+CREATE TABLE main.FangraphsPitcherSeason (
     PlayerId INT NOT NULL,
     PlayerName VARCHAR(255) NOT NULL,
     Team VARCHAR(100),
