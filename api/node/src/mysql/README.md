@@ -8,10 +8,10 @@ Using MySQL 8.0.40
 `mysql -u root -p`
 
 ```sql
-CREATE DATABASE LeagueForecaster;
+CREATE DATABASE Logins;
 ```
 
-`quit` then `mysql -u root -p LeagueForecaster`
+`quit` then `mysql -u root -p Logins`
 
 ## Create Table for Logins
 
