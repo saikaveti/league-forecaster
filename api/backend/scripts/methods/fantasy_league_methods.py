@@ -4,7 +4,7 @@ from backend.model.platform import Platform
 
 import pandas as pd
 
-def get_leagues(account_id, retrieve_id, sport, platform):
+def retrieve_leagues(account_id, retrieve_id, sport, platform):
     if not retrieve_id or not sport or not platform:
         return []
 
@@ -41,7 +41,7 @@ def get_leagues(account_id, retrieve_id, sport, platform):
         
     # If existing leagues is not empty, mark them as existing
         if not existing_leagues.empty:
-            for league in leagues:
+            for league in new_leagues:
                 league_id = league["leagueId"]
                 if league_id in existing_leagues["LeagueId"].values:
                     league["existing"] = True
@@ -67,7 +67,14 @@ def sync_leagues(league_ids, sport, platform, account_id):
         for league_id in league_ids:
             league_data = api_client.fantrax_team_roster(league_id, sport)
             synced_leagues.append(league_data)
-        return jsonify(synced_leagues), 200
 
     return []
 
+def get_user_leagues(account_id):
+    # Create an instance of the Database client
+    database_client = DatabaseClient('../../../../db/sqlite3/LeagueForecasterTest.db')
+
+    # Get the leagues from the database for this account
+    leagues = database_client.fetch_query("SELECT * FROM main.FantasyLeague WHERE AccountId = ?", (account_id,))
+
+    return leagues

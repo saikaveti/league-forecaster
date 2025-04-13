@@ -33,7 +33,8 @@ class DatabaseClient:
     def populate_fantasy_players(self, dataframe, type):
         self._populate_table("main.FantasyPlayers", dataframe, type)
 
-    def populate_fantasy_account_identifiers(self, dataframe, type)
+    def populate_fantasy_account_identifiers(self, dataframe, type):
+        self._populate_table("main.FantasyAccountIdentifiers", dataframe, type)
 
     def populate_pitching_probables(self, dataframe, type):
         self._populate_table("main.PitchingProbables", dataframe, type)
