@@ -1,1 +1,2 @@
-export const serverHost = 'https://leagueforecaster.com/api';
+export const serverHost =
+    import.meta.env.VITE_LF_SERVER_BASE_URL ?? 'https://leagueforecaster.com/api';

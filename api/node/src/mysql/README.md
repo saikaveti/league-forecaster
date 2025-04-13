@@ -5,13 +5,13 @@ Using MySQL 8.0.40
 
 ## Create Database
 
-`mysql -u root -p`
+`mysql -u lf -p`
 
 ```sql
 CREATE DATABASE Logins;
 ```
 
-`quit` then `mysql -u root -p Logins`
+`quit` then `mysql -u lf -p Logins`
 
 ## Create Table for Logins
 
