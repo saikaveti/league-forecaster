@@ -1,5 +1,6 @@
 import { db_check_for_existing_user, db_change_password } from '../mysql/queries.js';
 import redis from '../redis/redis.js';
+import { hashPassword } from '../utils/bcrypt.js';
 import {
     emailValidator,
     passwordValidator,
@@ -66,7 +67,8 @@ export async function resetPassword(req, res) {
         res.status(400).send(invalidResetSession);
         return;
     }
-    await db_change_password(existingResetSessionEmail, password);
+    const hashedPassword = await hashPassword(password);
+    await db_change_password(existingResetSessionEmail, hashedPassword);
     await redis.deleteResetSession(resetSession);
     res.sendStatus(200);
 }

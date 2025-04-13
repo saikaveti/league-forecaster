@@ -1,5 +1,6 @@
 import { extractLoginParams, incorrectLoginError, login, logout } from '../routes/login';
 import * as queries from '../mysql/queries.js';
+import { hashPassword } from '../utils/bcrypt.js';
 
 const email = 'bepen@gmail.com';
 const phone = '1234567890';
@@ -10,13 +11,16 @@ describe('login', () => {
         jest.clearAllMocks();
     });
     it('should send a 400 Bad Request when login parameters are invalid', async () => {
-        jest.spyOn(queries, 'db_login').mockResolvedValue([{ id: 1, email: 'bepen@gmail.com' }]);
+        const hashedPassword = await hashPassword(password);
+        jest.spyOn(queries, 'db_login').mockResolvedValue([
+            { id: 1, email: 'bepen@gmail.com', password: hashedPassword },
+        ]);
         const identifier = email;
-        const password = 'this_password_does_not_meet_criteria';
+        const invalidPassword = 'this_password_does_not_meet_criteria';
         const req = {
             body: {
                 identifier,
-                password,
+                password: invalidPassword,
             },
         };
         const res = {
@@ -29,11 +33,14 @@ describe('login', () => {
         await login(req, res, next);
         expect(res.status).toHaveBeenCalledWith(400);
         expect(() => {
-            extractLoginParams(identifier, password);
+            extractLoginParams(identifier, invalidPassword);
         }).toThrowError();
     });
     it('should send a 200 Ok when login parameters are valid', async () => {
-        jest.spyOn(queries, 'db_login').mockResolvedValue([{ id: 1, email: 'bepen@gmail.com' }]);
+        const hashedPassword = await hashPassword(password);
+        jest.spyOn(queries, 'db_login').mockResolvedValue([
+            { id: 1, email: 'bepen@gmail.com', password: hashedPassword },
+        ]);
         const identifier = email;
         const req = {
             body: {
@@ -51,7 +58,10 @@ describe('login', () => {
         expect(res.sendStatus).toHaveBeenCalledWith(200);
     });
     it('should send a jwt when login parameters are valid', async () => {
-        jest.spyOn(queries, 'db_login').mockResolvedValue([{ id: 1, email: 'bepen@gmail.com' }]);
+        const hashedPassword = await hashPassword(password);
+        jest.spyOn(queries, 'db_login').mockResolvedValue([
+            { id: 1, email: 'bepen@gmail.com', password: hashedPassword },
+        ]);
         const identifier = email;
         const req = {
             body: {

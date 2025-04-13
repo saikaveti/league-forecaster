@@ -13,6 +13,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import redis from '../redis/redis.js';
 import { createLoginToken, jwtOptions } from '../utils/jwt.js';
+import { hashPassword } from '../utils/bcrypt.js';
 
 export const undefinedSignupParams =
     'Undefined signup parameters. Please contact the system administrator.';
@@ -173,8 +174,12 @@ export async function finishSignup(req, res) {
         res.status(409).send(e.message);
         return;
     }
-
-    await db_signup(email, savedSession.phone, password);
+    try {
+        const hashedPassword = await hashPassword(password);
+        await db_signup(email, savedSession.phone, hashedPassword);
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
     const token = createLoginToken(email); // TODO: should set same data as login
     res.cookie('token', token, jwtOptions);
     res.sendStatus(200);

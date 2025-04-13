@@ -2,10 +2,10 @@ import { connection } from './connection.js';
 
 // TODO: need error handling on all of these. and make sure frontend is working as expected when these error
 
-export async function db_login(email = '', phone = '', password = '') {
+export async function db_login(email = '', phone = '') {
     const res = await connection.query(
-        `SELECT id,email FROM Logins WHERE (email = ? OR phone = ?) AND password = ?`,
-        [email, phone, password]
+        `SELECT id,email,password FROM Logins WHERE (email = ? OR phone = ?)`,
+        [email, phone]
     );
     const rows = res[0];
     return rows;

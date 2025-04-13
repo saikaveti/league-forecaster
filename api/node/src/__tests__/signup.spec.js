@@ -22,6 +22,7 @@ import {
 import * as queries from '../mysql/queries.js';
 import redis from '../redis/redis.js';
 import * as uuid from 'uuid';
+// import * as bcrypt from '../utils/bcrypt.js';
 
 const email = 'bepen@gmail.com';
 const password = 'P@ssw0rd';
@@ -491,6 +492,26 @@ describe('finishSignup', () => {
         await finishSignup(req, res, next);
         expect(res.status).toHaveBeenCalledWith(500);
     });
+    // it('should send a 500 Internal Server Error when there is a problem hashing the password', async () => {
+    //     jest.spyOn(bcrypt, 'hashPassword').mockImplementation(async () => {
+    //         throw new Error(bcrypt.errorHashingPassword);
+    //     });
+    //     const req = {
+    //         body: {
+    //             email,
+    //             password,
+    //             signupSession,
+    //         },
+    //     };
+    //     const res = {
+    //         send: jest.fn(),
+    //         sendStatus: jest.fn(),
+    //     };
+    //     res.status = jest.fn(() => res);
+    //     const next = jest.fn();
+    //     await finishSignup(req, res, next);
+    //     expect(res.status).toHaveBeenCalledWith(500);
+    // });
     it('should return a 200 and a signup cookie when valid', async () => {
         const req = {
             body: {

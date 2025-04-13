@@ -177,7 +177,7 @@ describe('resetPassword', () => {
             sendStatus: jest.fn(),
         };
         await resetPassword(req, res);
-        expect(dbChangePasswordSpy).toHaveBeenCalledWith(email, password);
+        expect(dbChangePasswordSpy).toHaveBeenCalledWith(email, expect.anything());
         expect(res.sendStatus).toHaveBeenCalledWith(200);
     });
     it('should send 200 Ok when successful', async () => {
