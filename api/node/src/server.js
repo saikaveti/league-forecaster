@@ -12,9 +12,8 @@ app.use(cookieParser());
 
 app.use((req, res, next) => {
     const corsWhitelist = [
-        'http://localhost:5173',
-        'http://localhost:5174',
-        'http://localhost:4173',
+        // 'http://localhost:5173',
+        'https://leagueforecaster.com',
     ];
     if (corsWhitelist.includes(req.headers.origin)) {
         res.header('Access-Control-Allow-Origin', req.headers.origin);
