@@ -6,7 +6,7 @@ export const protectedRoutes = express.Router();
 protectedRoutes.use(authUser);
 
 protectedRoutes.get('/content', (req, res) => {
-    res.send(`This is the content in Content.vue for ${req.email}`);
+    res.send(`This is the content in Content.vue for ${req.jwt}`);
 });
 
 export function authUser(req, res, next) {
@@ -19,7 +19,7 @@ export function authUser(req, res, next) {
                 if (err) {
                     res.sendStatus(403);
                 } else {
-                    req.email = data;
+                    req.jwt = data;
                     next();
                 }
             });
