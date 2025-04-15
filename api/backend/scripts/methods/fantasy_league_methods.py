@@ -4,6 +4,32 @@ from backend.model.platform import Platform
 
 import pandas as pd
 
+def add_fantasy_league_account(account_id, retrieve_id, sport, platform):
+    # save API key
+    # validate the api key
+    # return if the key is successful
+    return None;
+
+def get_fantasy_leagues(account_id, sport, platform):
+    # get all leagues for this account, tell you on the response, which ones you have already added
+    return None;
+
+def add_fantasy_leagues(league_ids, account_id, sport, platform):
+    # add leagues to the database for this account
+    # sync the players for these leagues
+    # return the league ids that were added successfully
+    return None;
+
+def get_fantasy_roster_data(account_id, sport):
+    # get the roster data for this account and sport
+    # return the data in a standard format
+    return None;
+
+def sync_fantasy_players(account_id, sport):
+    # sync the fantasy players for this account and sport
+    # return the data in a standard format
+    return None;
+
 def retrieve_leagues(account_id, retrieve_id, sport, platform):
     if not retrieve_id or not sport or not platform:
         return []
