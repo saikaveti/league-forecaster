@@ -20,11 +20,6 @@ def add_fantasy_leagues(league_ids, account_id, sport, platform):
     # return the league ids that were added successfully
     return None;
 
-def get_fantasy_roster_data(account_id, sport):
-    # get the roster data for this account and sport
-    # return the data in a standard format
-    return None;
-
 def sync_fantasy_players(account_id, sport):
     # sync the fantasy players for this account and sport
     # return the data in a standard format
