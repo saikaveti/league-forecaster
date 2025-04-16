@@ -1,5 +1,10 @@
 <template>
-    <v-app>
+    <v-app :theme="theme">
+        <div class="d-flex justify-end pa-2">
+            <v-btn icon @click="toggleTheme">
+                <v-icon>{{ isDark ? 'mdi-moon-waning-crescent' : 'mdi-weather-sunny' }}</v-icon>
+            </v-btn>
+        </div>
         <v-main>
             <v-container>
                 <v-row justify="center" class="mb-6">
@@ -163,10 +168,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useTheme } from 'vuetify';
 
 const elevate = ref(false);
 const loading = ref(false);
+const vuetifyTheme = useTheme();
+
+const isDark = ref(false);
+
+const theme = computed(() => (isDark.value ? 'dark' : 'light'));
+
+const toggleTheme = () => {
+    isDark.value = !isDark.value;
+    vuetifyTheme.global.name.value = theme.value;
+};
 </script>
 
 <style scoped></style>
