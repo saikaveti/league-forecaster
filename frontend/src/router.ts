@@ -32,6 +32,11 @@ const routes = [
         name: 'ChangePassword',
         component: () => import('./views/ChangePassword.vue'),
     },
+    {
+        path: '/themes',
+        name: 'Themes',
+        component: () => import('./views/Themes.vue'),
+    },
 ];
 
 const router = createRouter({
