@@ -2,7 +2,7 @@
     <v-app :theme="theme">
         <div class="d-flex justify-end pa-2">
             <v-btn icon @click="toggleTheme">
-                <v-icon>{{ isDark ? 'mdi-moon-waning-crescent' : 'mdi-weather-sunny' }}</v-icon>
+                <v-icon :icon="[isDark ? mdiMoonWaningCrescent : mdiWeatherSunny]"></v-icon>
             </v-btn>
         </div>
         <v-main>
@@ -170,6 +170,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useTheme } from 'vuetify';
+import { mdiWeatherSunny, mdiMoonWaningCrescent } from '@mdi/js';
 
 const elevate = ref(false);
 const loading = ref(false);

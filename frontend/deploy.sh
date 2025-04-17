@@ -4,6 +4,11 @@ git checkout main
 echo "Pulling latest changes from main"
 git pull origin main
 
+echo "Cleaning directory"
+yarn cache clean
+rm -rf node_modules dist
+yarn install
+
 echo "Building app"
 yarn build
 

@@ -1,9 +1,23 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { createVuetify } from 'vuetify';
+import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import router from './router.js';
 import App from './App.vue';
 import 'vuetify/styles';
-import '@mdi/font/css/materialdesignicons.min.css';
 
-createApp(App).use(createVuetify({})).use(router).use(createPinia()).mount('#app');
+createApp(App)
+    .use(
+        createVuetify({
+            icons: {
+                defaultSet: 'mdi',
+                aliases,
+                sets: {
+                    mdi,
+                },
+            },
+        })
+    )
+    .use(router)
+    .use(createPinia())
+    .mount('#app');
