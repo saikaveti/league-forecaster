@@ -149,15 +149,6 @@
             </v-row>
         </v-container>
     </v-main>
-    <v-footer color="primary" padless>
-        <v-container>
-            <v-row justify="center" class="mt-2">
-                <v-col cols="12" class="text-center text-white">
-                    &copy; {{ new Date().getFullYear() }} LeagueForecaster. All rights reserved.
-                </v-col>
-            </v-row>
-        </v-container>
-    </v-footer>
 </template>
 
 <script setup lang="ts">

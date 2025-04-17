@@ -23,7 +23,7 @@ createApp(App)
                         dark: false,
                         colors: {
                             primary: '#1976D2',
-                            secondary: '#424242',
+                            secondary: '#546E7A',
                             accent: '#82B1FF',
                             error: '#FF5252',
                             info: '#2196F3',
@@ -31,13 +31,14 @@ createApp(App)
                             warning: '#FB8C00',
                             background: '#FFFFFF',
                             surface: '#FFFFFF',
+                            subtleAccent: '#FFB300',
                         },
                     },
                     dark: {
                         dark: true,
                         colors: {
                             primary: '#90CAF9',
-                            secondary: '#BDBDBD',
+                            secondary: '#80CBC4',
                             accent: '#448AFF',
                             error: '#FFCDD2',
                             info: '#64B5F6',
@@ -45,6 +46,7 @@ createApp(App)
                             warning: '#FFB74D',
                             background: '#121212',
                             surface: '#1E1E1E',
+                            subtleAccent: '#FFCA28',
                         },
                     },
                 },

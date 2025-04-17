@@ -1,24 +1,37 @@
 <template>
     <v-app :theme="theme">
-        <div class="d-flex justify-end pa-2">
-            <v-btn icon @click="toggleTheme">
-                <v-icon :icon="[isDark ? mdiMoonWaningCrescent : mdiWeatherSunny]"></v-icon>
-            </v-btn>
-        </div>
-        <RouterView v-slot="{ Component }">
-            <template v-if="Component">
-                <KeepAlive>
-                    <Suspense timeout="0">
-                        <template #default>
-                            <component :is="Component"></component>
-                        </template>
-                        <template #fallback>
-                            <LoadingSpinner />
-                        </template>
-                    </Suspense>
-                </KeepAlive>
+        <v-app-bar flat color="primary" app>
+            <template v-slot:append>
+                <v-btn icon @click="toggleTheme">
+                    <v-icon :icon="[isDark ? mdiMoonWaningCrescent : mdiWeatherSunny]"></v-icon>
+                </v-btn>
             </template>
-        </RouterView>
+        </v-app-bar>
+        <v-main>
+            <RouterView v-slot="{ Component }">
+                <template v-if="Component">
+                    <KeepAlive>
+                        <Suspense timeout="0">
+                            <template #default>
+                                <component :is="Component"></component>
+                            </template>
+                            <template #fallback>
+                                <LoadingSpinner />
+                            </template>
+                        </Suspense>
+                    </KeepAlive>
+                </template>
+            </RouterView>
+        </v-main>
+        <v-footer color="background" padless app>
+            <v-container>
+                <v-row justify="center" class="mt-2">
+                    <v-col cols="12" class="text-center">
+                        &copy; {{ new Date().getFullYear() }} LeagueForecaster. All rights reserved.
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-footer>
     </v-app>
 </template>
 
