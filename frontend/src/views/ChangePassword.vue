@@ -1,17 +1,9 @@
 <template>
-    <v-img
-        class="mx-auto my-6"
-        max-width="228"
-        src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
-    ></v-img>
     <div class="container">
         <v-card class="pa-4 pb-20" elevation="2" width="350" :loading="loading">
-            <v-card-text v-if="error" class="pa-1 pb-5 invalid">{{ error }}</v-card-text>
+            <v-card-text v-if="error" class="pa-1 pb-5 text-error">{{ error }}</v-card-text>
             <TransitionGroup name="move">
-                <div
-                    v-if="successfullyChangedPassword"
-                    class="pl-0 pb-2 mb-4 text-center confirmation-text"
-                >
+                <div v-if="successfullyChangedPassword" class="pl-0 pb-2 mb-4 text-center">
                     Your password has been successfully changed. You may now log in with your new
                     password.
                 </div>
@@ -22,8 +14,8 @@
                 density="compact"
                 label="Password"
                 variant="outlined"
-                :class="password !== '' && !passwordIsValid && 'invalid'"
-                :color="password !== '' && passwordIsValid ? 'green' : undefined"
+                :class="password !== '' && !passwordIsValid && 'text-error'"
+                :color="password !== '' && passwordIsValid ? 'success' : undefined"
             ></v-text-field>
             <v-text-field
                 v-model="passwordVerify"
@@ -31,23 +23,27 @@
                 density="compact"
                 label="Verify Password"
                 variant="outlined"
-                :class="passwordVerify !== '' && !passwordVerifyIsValid && 'invalid'"
-                :color="passwordVerify !== '' && passwordVerifyIsValid ? 'green' : undefined"
+                :class="passwordVerify !== '' && !passwordVerifyIsValid && 'text-error'"
+                :color="passwordVerify !== '' && passwordVerifyIsValid ? 'success' : undefined"
             ></v-text-field>
             <v-btn
-                color="blue"
+                color="primary"
                 size="large"
                 variant="tonal"
                 block
                 @click="changePassword"
                 :disabled="
-                    !(passwordIsValid && passwordVerifyIsValid) && !successfullyChangedPassword
+                    (!(passwordIsValid && passwordVerifyIsValid) && !successfullyChangedPassword) ||
+                    successfullyChangedPassword
                 "
             >
                 Change Password
             </v-btn>
             <v-card-text v-if="successfullyChangedPassword" class="text-center">
-                <router-link to="/login" class="text-blue text-decoration-none" @click="clearInputs"
+                <router-link
+                    to="/login"
+                    class="text-primary text-decoration-none"
+                    @click="clearInputs"
                     >Back to login</router-link
                 >
             </v-card-text>
@@ -129,16 +125,6 @@ function clearInputs() {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-}
-.confirmation-text {
-    color: rgb(46, 46, 46);
-}
-.default {
-    color: rgba(0, 0, 0, 0.75);
-}
-
-.invalid {
-    color: rgba(255, 0, 0, 0.75);
 }
 
 .move-move,

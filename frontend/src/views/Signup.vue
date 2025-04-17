@@ -1,12 +1,7 @@
 <template>
-    <v-img
-        class="mx-auto mt-6 mb-16"
-        max-width="228"
-        src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
-    ></v-img>
     <div class="container d-flex justify-center pb-8">
         <v-card class="pa-4 pb-20" elevation="2" width="350" :loading="loading">
-            <v-card-text v-if="serverError" class="pa-1 pb-5 invalid">{{
+            <v-card-text v-if="serverError" class="pa-1 pb-5 text-error">{{
                 serverError
             }}</v-card-text>
             <TransitionGroup name="move">
@@ -18,8 +13,8 @@
                     prefix="🇺🇸 +1"
                     key="0"
                     :disabled="waitingToVerify || phoneNumberIsVerified"
-                    :class="phone !== '' && !phoneIsValid && 'invalid'"
-                    :color="phone !== '' && phoneIsValid ? 'green' : undefined"
+                    :class="phone !== '' && !phoneIsValid && 'text-error'"
+                    :color="phone !== '' && phoneIsValid ? 'success' : undefined"
                     @keydown.enter="(_: any) => phoneIsValid && sendTextCode()"
                 ></v-text-field>
             </TransitionGroup>
@@ -35,8 +30,8 @@
                     inputmode="numeric"
                     autocomplete="one-time-code"
                     pattern="\d{6}"
-                    :class="textCode !== '' && !textCodeIsValid && 'invalid'"
-                    :color="textCode !== '' && textCodeIsValid ? 'green' : undefined"
+                    :class="textCode !== '' && !textCodeIsValid && 'text-error'"
+                    :color="textCode !== '' && textCodeIsValid ? 'success' : undefined"
                 ></v-text-field>
             </TransitionGroup>
             <TransitionGroup name="move">
@@ -46,8 +41,8 @@
                         density="compact"
                         label="Email Address"
                         variant="outlined"
-                        :class="email !== '' && !emailIsValid && 'invalid'"
-                        :color="email !== '' && emailIsValid ? 'green' : undefined"
+                        :class="email !== '' && !emailIsValid && 'text-error'"
+                        :color="email !== '' && emailIsValid ? 'success' : undefined"
                         @keydown.enter="(_: any) => allSignupFieldsValid && submit()"
                     ></v-text-field>
                     <v-text-field
@@ -56,8 +51,8 @@
                         density="compact"
                         label="Password"
                         variant="outlined"
-                        :class="password !== '' && !passwordIsValid && 'invalid'"
-                        :color="password !== '' && passwordIsValid ? 'green' : undefined"
+                        :class="password !== '' && !passwordIsValid && 'text-error'"
+                        :color="password !== '' && passwordIsValid ? 'success' : undefined"
                         @keydown.enter="(_: any) => allSignupFieldsValid && submit()"
                     ></v-text-field>
                     <v-text-field
@@ -66,14 +61,14 @@
                         density="compact"
                         label="Verify Password"
                         variant="outlined"
-                        :class="passwordVerify !== '' && !passwordVerifyIsValid && 'invalid'"
+                        :class="passwordVerify !== '' && !passwordVerifyIsValid && 'text-error'"
                         :color="
-                            passwordVerify !== '' && passwordVerifyIsValid ? 'green' : undefined
+                            passwordVerify !== '' && passwordVerifyIsValid ? 'success' : undefined
                         "
                         @keydown.enter="(_: any) => allSignupFieldsValid && submit()"
                     ></v-text-field>
                     <v-btn
-                        color="blue"
+                        color="primary"
                         size="large"
                         variant="tonal"
                         :disabled="!allSignupFieldsValid"
@@ -85,7 +80,7 @@
             </TransitionGroup>
             <v-btn
                 v-if="!waitingToVerify && signupSession === ''"
-                color="blue"
+                color="primary"
                 size="large"
                 variant="tonal"
                 :disabled="!phoneIsValid"
@@ -95,7 +90,7 @@
             >
             <v-btn
                 v-if="waitingToVerify && verifyButtonText !== 'Verify'"
-                color="blue"
+                color="primary"
                 size="large"
                 variant="tonal"
                 block
@@ -104,7 +99,7 @@
             >
             <v-btn
                 v-else-if="waitingToVerify && verifyButtonText === 'Verify'"
-                color="blue"
+                color="primary"
                 size="large"
                 variant="tonal"
                 block
@@ -114,7 +109,9 @@
             <div
                 v-for="(tip, idx) in tips"
                 :key="idx"
-                :class="tip.input === '' ? 'default' : tip.validator ? 'valid' : 'invalid'"
+                :class="
+                    tip.input === '' ? 'default' : tip.validator ? 'text-success' : 'text-error'
+                "
             >
                 <v-card-text class="d-flex">
                     <span :class="!tip.input ? 'mr-5' : 'mr-4'">
@@ -124,7 +121,10 @@
                 </v-card-text>
             </div>
             <v-card-text class="text-center">
-                <router-link to="/login" class="text-blue text-decoration-none" @click="resetFields"
+                <router-link
+                    to="/login"
+                    class="text-primary text-decoration-none"
+                    @click="resetFields"
                     >Back to login</router-link
                 >
             </v-card-text>
@@ -363,14 +363,6 @@ function resetFields() {
 <style scoped lang="less">
 .default {
     color: rgba(0, 0, 0, 0.75);
-}
-
-.invalid {
-    color: rgba(255, 0, 0, 0.75);
-}
-
-.valid {
-    color: rgba(0, 128, 0, 0.75);
 }
 
 .blur {

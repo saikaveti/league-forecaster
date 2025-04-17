@@ -1,12 +1,7 @@
 <template>
-    <v-img
-        class="mx-auto my-6"
-        max-width="228"
-        src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
-    ></v-img>
     <div class="container">
         <v-card class="pa-4 pb-20" elevation="2" width="350" :loading="loading">
-            <v-card-subtitle v-if="hasFailedLogin" class="pl-0 pb-2 incorrect-creds-text">
+            <v-card-subtitle v-if="hasFailedLogin" opacity="100" class="pl-0 pb-2 text-error">
                 {{ errorText }}
             </v-card-subtitle>
             <v-text-field
@@ -28,7 +23,7 @@
             <v-btn color="blue" size="large" variant="tonal" block @click="login"> Log In </v-btn>
 
             <v-card-text class="text-center">
-                <router-link to="/signup" class="text-blue text-decoration-none"
+                <router-link to="/signup" class="text-primary text-decoration-none"
                     >Sign up now</router-link
                 >
             </v-card-text>

@@ -30,7 +30,7 @@ import { mdiWeatherSunny, mdiMoonWaningCrescent } from '@mdi/js';
 
 const vuetifyTheme = useTheme();
 
-const isDark = ref(false);
+const isDark = ref(vuetifyTheme.global.name.value === 'dark');
 
 const theme = computed(() => (isDark.value ? 'dark' : 'light'));
 
