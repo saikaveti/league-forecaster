@@ -22,8 +22,8 @@ createApp(App)
                     light: {
                         dark: false,
                         colors: {
-                            primary: '#1976D2',
-                            secondary: '#546E7A',
+                            primary: '#003086',
+                            secondary: '#FED100',
                             accent: '#82B1FF',
                             error: '#FF5252',
                             info: '#2196F3',
@@ -37,15 +37,15 @@ createApp(App)
                     dark: {
                         dark: true,
                         colors: {
-                            primary: '#90CAF9',
-                            secondary: '#80CBC4',
+                            primary: '#003086',
+                            secondary: '#FED100',
                             accent: '#448AFF',
                             error: '#FFCDD2',
                             info: '#64B5F6',
                             success: '#81C784',
                             warning: '#FFB74D',
                             background: '#121212',
-                            surface: '#1E1E1E',
+                            surface: '#121212',
                             subtleAccent: '#FFCA28',
                         },
                     },
