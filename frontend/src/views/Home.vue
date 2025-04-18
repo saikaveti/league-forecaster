@@ -7,9 +7,14 @@
                         <v-sheet color="primary" height="200">
                             <v-row align="center" justify="center" class="fill-height">
                                 <v-col class="text-center">
-                                    <h1 class="text-h4 font-weight-bold text-white">
-                                        LeagueForecaster
-                                    </h1>
+                                    <v-img
+                                        :src="largePrimary"
+                                        max-width="300"
+                                        max-height="150"
+                                        contain
+                                        alt="LeagueForecaster Logo"
+                                        class="mx-auto"
+                                    ></v-img>
                                 </v-col>
                             </v-row>
                         </v-sheet>
@@ -20,7 +25,7 @@
                             <v-hover v-slot="{ isHovering }">
                                 <span
                                     :style="{
-                                        color: isHovering ? 'primary' : 'inherit',
+                                        color: isHovering ? 'accent' : 'inherit',
                                         transition: 'color 0.3s',
                                     }"
                                 >
@@ -31,7 +36,7 @@
                         </v-card-text>
                         <v-card-actions class="justify-center">
                             <v-btn
-                                color="primary"
+                                color="accent"
                                 to="/content"
                                 rounded="pill"
                                 @mouseover="elevate = true"
@@ -46,7 +51,7 @@
                             <v-progress-linear
                                 :active="loading"
                                 :indeterminate="loading"
-                                color="primary"
+                                color="accent"
                                 height="5"
                             ></v-progress-linear>
                         </v-card-text>
@@ -153,6 +158,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import largePrimary from '../assets/large-primary-background.webp';
 
 const elevate = ref(false);
 const loading = ref(false);

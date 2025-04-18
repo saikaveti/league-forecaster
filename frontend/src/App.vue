@@ -1,7 +1,19 @@
 <template>
     <v-app :theme="theme">
-        <v-app-bar :color="$vuetify.display.lg ? 'background' : 'primary'" flat app>
-            <v-app-bar-title>LeagueForecaster</v-app-bar-title>
+        <v-app-bar
+            :color="$vuetify.display.mdAndUp ? 'background' : 'primary'"
+            flat
+            app
+            class="border-b"
+        >
+            <v-img
+                class="mx-2"
+                :src="headerImage"
+                max-height="60"
+                :max-width="$vuetify.display.mdAndUp ? 300 : 60"
+                contain
+            ></v-img>
+            <v-spacer></v-spacer>
             <v-menu>
                 <template v-slot:activator="{ props }">
                     <v-btn icon v-bind="props">
@@ -61,9 +73,14 @@
 <script setup lang="ts">
 import LoadingSpinner from './components/LoadingSpinner.vue';
 import { ref, computed } from 'vue';
-import { useTheme } from 'vuetify';
+import { useTheme, useDisplay } from 'vuetify';
 import { mdiDotsVertical } from '@mdi/js';
+import smallStandard from './assets/small-standard.webp';
+import smallPrimary from './assets/small-primary-background.webp';
+import largeStandard from './assets/large-standard.webp';
+import largePrimary from './assets/large-primary-background.webp';
 const vuetifyTheme = useTheme();
+const display = useDisplay();
 
 const isDark = ref(vuetifyTheme.global.name.value === 'dark');
 const theme = computed(() => (isDark.value ? 'dark' : 'light'));
@@ -84,6 +101,15 @@ const logout = () => {
     // Placeholder for logout logic
     isLoggedIn.value = false;
 };
+
+const headerImage = computed(() => {
+    if (display.mdAndUp.value && !isDark.value) {
+        return largeStandard;
+    } else if (display.mdAndUp.value && isDark.value) {
+        return largePrimary;
+    }
+    return smallPrimary;
+});
 </script>
 
 <style scoped lang="less"></style>

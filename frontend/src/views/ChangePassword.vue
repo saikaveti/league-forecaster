@@ -27,7 +27,7 @@
                 :color="passwordVerify !== '' && passwordVerifyIsValid ? 'success' : undefined"
             ></v-text-field>
             <v-btn
-                color="primary"
+                color="accent"
                 size="large"
                 variant="tonal"
                 block
@@ -42,7 +42,7 @@
             <v-card-text v-if="successfullyChangedPassword" class="text-center">
                 <router-link
                     to="/login"
-                    class="text-primary text-decoration-none"
+                    class="text-accent text-decoration-none"
                     @click="clearInputs"
                     >Back to login</router-link
                 >

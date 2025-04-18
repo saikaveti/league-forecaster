@@ -23,7 +23,7 @@
             <v-btn color="blue" size="large" variant="tonal" block @click="login"> Log In </v-btn>
 
             <v-card-text class="text-center">
-                <router-link to="/signup" class="text-primary text-decoration-none"
+                <router-link to="/signup" class="text-accent text-decoration-none"
                     >Sign up now</router-link
                 >
             </v-card-text>
