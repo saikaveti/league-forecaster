@@ -68,7 +68,7 @@
                         @keydown.enter="(_: any) => allSignupFieldsValid && submit()"
                     ></v-text-field>
                     <v-btn
-                        color="primary"
+                        color="accent"
                         size="large"
                         variant="tonal"
                         :disabled="!allSignupFieldsValid"
@@ -80,7 +80,7 @@
             </TransitionGroup>
             <v-btn
                 v-if="!waitingToVerify && signupSession === ''"
-                color="primary"
+                color="accent"
                 size="large"
                 variant="tonal"
                 :disabled="!phoneIsValid"
@@ -90,7 +90,7 @@
             >
             <v-btn
                 v-if="waitingToVerify && verifyButtonText !== 'Verify'"
-                color="primary"
+                color="accent"
                 size="large"
                 variant="tonal"
                 block
@@ -99,7 +99,7 @@
             >
             <v-btn
                 v-else-if="waitingToVerify && verifyButtonText === 'Verify'"
-                color="primary"
+                color="accent"
                 size="large"
                 variant="tonal"
                 block
@@ -123,7 +123,7 @@
             <v-card-text class="text-center">
                 <router-link
                     to="/login"
-                    class="text-primary text-decoration-none"
+                    class="text-accent text-decoration-none"
                     @click="resetFields"
                     >Back to login</router-link
                 >

@@ -77,6 +77,6 @@
     </v-app>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // TODO: hide this from the main bundle and only show in dev
 </script>
