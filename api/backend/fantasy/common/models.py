@@ -34,3 +34,26 @@ class FantasyPlayers(models.Model):
     class Meta:
         db_table = 'main.FantasyPlayers'
         unique_together = ('platform', 'sport', 'player_id')
+
+class FantasyTeamRoster(models.Model):
+    platform = models.CharField(max_length=50)
+    sport = models.CharField(max_length=50)
+    team_id = models.CharField(max_length=255)
+    player_id = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'main.FantasyTeamRoster'
+        unique_together = ('platform', 'sport', 'league_id', 'team_id', 'player_id')
+
+class FantasyRosteredData(models.Model):
+    platform = models.CharField(max_length=50)
+    sport = models.CharField(max_length=50)
+    team_id = models.CharField(max_length=255)
+    league_id = models.CharField(max_length=255)
+    player_id = models.CharField(max_length=255)
+    eligible_positions = models.CharField(max_length=255, null=True, blank=True)
+    rostered_status = models.CharField(max_length=50, null=True, blank=True)
+
+    class Meta:
+        db_table = 'main.FantasyRosteredData'
+        unique_together = ('platform', 'sport', 'league_id', 'team_id', 'player_id')

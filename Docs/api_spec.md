@@ -2,20 +2,14 @@
 
 ## FantasyAccountIdentifier
 
-### Endpoint
-`POST /common/account-identifier/`
-
-### Description
+### POST `/common/account-identifier/`
 Adds a new Fantasy Account Identifier for a given platform and retrieve ID. Validates the retrieve ID for the `Fantrax` platform by calling the `fantrax_get_leagues` method.
 
-### Authentication
-- Requires a Bearer Token in the `Authorization` header.
-- The token must include:
-  - `account_id`: The account identifier.
-  - `retrieve_id`: The retrieve ID for validation.
+#### Request Headers
+- `Authorization`: Bearer token for authentication.
 
-### Request Body
-| Field       | Type   | Required | Description                          |
+#### Request Body
+| Parameter   | Type   | Required | Description                          |
 |-------------|--------|----------|--------------------------------------|
 | `platform`  | string | Yes      | The platform name (e.g., `Fantrax`). |
 | `sport`     | string | Yes      | The sport name (e.g., `Baseball`).   |
@@ -34,50 +28,37 @@ Authorization: Bearer <token>
 }
 ```
 
-### Responses
+#### Responses
+- **201 Created**: The account identifier was successfully added.
+  ```json
+  {
+    "id": 1,
+    "platform": "Fantrax",
+    "sport": "Baseball"
+  }
+  ```
+- **400 Bad Request**: The request was invalid, or the retrieve ID could not be validated.
+  ```json
+  {
+    "error": "Invalid retrieve_id or unable to fetch leagues."
+  }
+  ```
 
-#### 201 Created
-The account identifier was successfully added.
-
-**Example Response:**
-```json
-{
-  "id": 1,
-  "platform": "Fantrax",
-  "sport": "Baseball"
-}
-```
-
-#### 400 Bad Request
-The request was invalid, or the retrieve ID could not be validated.
-
-**Example Response:**
-```json
-{
-  "error": "Invalid retrieve_id or unable to fetch leagues."
-}
-```
-
-### Notes
+#### Notes
 - The `account_id` and `retrieve_id` are extracted from the Bearer Token in the `Authorization` header.
-- The `platform` and `sport` are provided in the POST request body.
 - For the `Fantrax` platform, the `retrieve_id` is validated by calling the `fantrax_get_leagues` method from the `ApiClient`.
-- If the validation fails, the API returns a `400 Bad Request` response.
+
+---
 
 ## FantasyAccountLeague
 
-### Endpoint
-`GET /common/account-leagues/sport/<sport>/platform/<platform>/`
+### GET `/sport/{sport}/platform/{platform}/`
+Retrieves a list of leagues for a specific account, sport, and platform.
 
-### Description
-Retrieves a list of leagues for a specific account, sport, and platform. The account ID is extracted from the Bearer Token in the `Authorization` header.
+#### Request Headers
+- `Authorization`: Bearer token for authentication.
 
-### Authentication
-- Requires a Bearer Token in the `Authorization` header.
-- The token must include:
-  - `account_id`: The account identifier.
-
-### URL Parameters
+#### Path Parameters
 | Parameter   | Type   | Required | Description                          |
 |-------------|--------|----------|--------------------------------------|
 | `sport`     | string | Yes      | The sport name (e.g., `MLB`).        |
@@ -91,69 +72,153 @@ Authorization: Bearer <token>
 
 **URL:**
 ```
-/common/account-leagues/sport/MLB/platform/Fantrax/
+/sport/MLB/platform/Fantrax/
 ```
 
-### Responses
-
-#### 200 OK
-A list of leagues associated with the account, sport, and platform.
-
-**Example Response:**
-```json
-[
+#### Responses
+- **200 OK**: A list of leagues associated with the account, sport, and platform.
+  ```json
+  [
+    {
+      "leagueName": "50$ Dynasty League - Year One",
+      "teamName": "Portland Sea Dogs",
+      "leagueId": "grb6qnx0m5mv0crr",
+      "teamId": "x0o5svhhm5u7k9n7",
+      "sport": "MLB"
+    }
+  ]
+  ```
+- **400 Bad Request**: Invalid input or missing required parameters.
+  ```json
   {
-    "leagueName": "50$ Dynasty League - Year One",
-    "teamName": "Portland Sea Dogs",
-    "leagueId": "grb6qnx0m5mv0crr",
-    "teamId": "x0o5svhhm5u7k9n7",
-    "sport": "MLB"
+    "error": "Sport and platform are required."
   }
-]
-```
+  ```
+- **401 Unauthorized**: Missing or invalid authorization token.
+  ```json
+  {
+    "error": "Authorization header missing or invalid."
+  }
+  ```
+- **404 Not Found**: No `retrieve_id` exists for the given account, sport, and platform combination.
+  ```json
+  {
+    "error": "No retrieve_id exists for this account, sport, and platform combination."
+  }
+  ```
 
-#### 400 Bad Request
-The request was invalid (e.g., missing required parameters or unsupported platform).
-
-**Example Response:**
-```json
-{
-  "error": "Sport and platform are required."
-}
-```
-
-#### 401 Unauthorized
-The Bearer Token is missing or invalid.
-
-**Example Response:**
-```json
-{
-  "error": "Authorization header missing or invalid."
-}
-```
-
-#### 404 Not Found
-No `retrieve_id` exists for the given account, sport, and platform combination.
-
-**Example Response:**
-```json
-{
-  "error": "No retrieve_id exists for this account, sport, and platform combination."
-}
-```
-
-#### 400 Bad Request (Fantrax API Error)
-The Fantrax API could not fetch leagues for the given `retrieve_id`.
-
-**Example Response:**
-```json
-{
-  "error": "Unable to fetch leagues from Fantrax."
-}
-```
-
-### Notes
+#### Notes
 - The `account_id` is extracted from the Bearer Token.
-- The `sport` and `platform` are provided as part of the URL path.
 - For the `Fantrax` platform, the `retrieve_id` is fetched from the database and used to call the Fantrax API to retrieve leagues.
-- The response is a list of leagues associated with the account.
+
+---
+
+### POST `/sport/{sport}/platform/{platform}/`
+Adds leagues for a specific account, sport, and platform, and then syncs the data.
+
+#### Request Headers
+- `Authorization`: Bearer token for authentication.
+
+#### Path Parameters
+| Parameter   | Type   | Required | Description                          |
+|-------------|--------|----------|--------------------------------------|
+| `sport`     | string | Yes      | The sport for which leagues are being added. |
+| `platform`  | string | Yes      | The platform (e.g., `Fantrax`).      |
+
+#### Request Body
+| Parameter   | Type   | Required | Description                          |
+|-------------|--------|----------|--------------------------------------|
+| `league_ids`| array  | Yes      | List of league IDs to be added.      |
+
+#### Example
+**Headers:**
+```http
+Authorization: Bearer <token>
+```
+
+**Body:**
+```json
+{
+  "league_ids": ["league_id_1", "league_id_2"]
+}
+```
+
+#### Responses
+- **200 OK**: Leagues processed and synced successfully.
+  ```json
+  {
+    "message": "Leagues processed and synced successfully."
+  }
+  ```
+- **400 Bad Request**: Invalid input or missing required fields.
+  ```json
+  {
+    "error": "A list of league_ids is required."
+  }
+  ```
+- **401 Unauthorized**: Missing or invalid authorization token.
+  ```json
+  {
+    "error": "Authorization header missing or invalid."
+  }
+  ```
+- **404 Not Found**: No teams found for the given account and sport.
+  ```json
+  {
+    "error": "No teams found for the given account and sport."
+  }
+  ```
+
+---
+
+### POST `/sport/{sport}/`
+Syncs team rosters and rostered data for all teams associated with the account and sport.
+
+#### Request Headers
+- `Authorization`: Bearer token for authentication.
+
+#### Path Parameters
+| Parameter   | Type   | Required | Description                          |
+|-------------|--------|----------|--------------------------------------|
+| `sport`     | string | Yes      | The sport for which data is being synced. |
+
+#### Example
+**Headers:**
+```http
+Authorization: Bearer <token>
+```
+
+**URL:**
+```
+/sport/MLB/
+```
+
+#### Responses
+- **200 OK**: Sync completed successfully.
+  ```json
+  {
+    "message": "Sync completed successfully."
+  }
+  ```
+- **400 Bad Request**: Invalid input or missing required fields.
+  ```json
+  {
+    "error": "Sport is required."
+  }
+  ```
+- **401 Unauthorized**: Missing or invalid authorization token.
+  ```json
+  {
+    "error": "Authorization header missing or invalid."
+  }
+  ```
+- **404 Not Found**: No teams found for the given account and sport.
+  ```json
+  {
+    "error": "No teams found for the given account and sport."
+  }
+  ```
+
+#### Notes
+- The `account_id` is extracted from the Bearer Token.
+- The `sport` is provided as part of the URL path.
